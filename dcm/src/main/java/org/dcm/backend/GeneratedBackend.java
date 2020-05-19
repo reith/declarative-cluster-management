@@ -188,6 +188,9 @@ public final class GeneratedBackend implements IGeneratedBackend {
       final var i33 = i32.get("MATCHES", Object[].class);
       for (int i33Iter = 0; i33Iter < i33.length; i33Iter++) {
         final var i34 = podsToAssignControllableNodeNameChannel.get((String) i33[i33Iter]);
+        if (i34 == null) {
+          continue;
+        }
         listOfi36.add(i34);
       }
       final var i37 = listOfi36;
