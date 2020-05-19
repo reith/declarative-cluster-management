@@ -53,8 +53,10 @@ public final class GeneratedBackend implements IGeneratedBackend {
     /* Table "PODS_TO_ASSIGN" */
     final List<Record15<String, String, String, String, Integer, Integer, Integer, Integer, String, String, Boolean, Boolean, Boolean, Integer, String>> podsToAssign = (List<Record15<String, String, String, String, Integer, Integer, Integer, Integer, String, String, Boolean, Boolean, Boolean, Integer, String>>) context.getTable("PODS_TO_ASSIGN").getCurrentData();
     final IntVar[] podsToAssignControllableNodeName = new IntVar[podsToAssign.size()];
+    final Map<String, IntVar>  podsToAssignControllableNodeNameChannel = new HashMap<>();
     for (int i = 0; i < podsToAssign.size(); i++) {
       podsToAssignControllableNodeName[i] = INT_VAR_NO_BOUNDS(model, "CONTROLLABLE__NODE_NAME");
+      podsToAssignControllableNodeNameChannel.put(podsToAssign.get(i).get("POD_NAME", String.class), podsToAssignControllableNodeName[i]);
     }
 
     /* Table "PODS_THAT_TOLERATE_NODE_TAINTS" */
@@ -161,6 +163,11 @@ public final class GeneratedBackend implements IGeneratedBackend {
     }
     System.out.println("Group-by final view: we are at " + (System.nanoTime() - startTime));
 
+    final Map<String, Record3<String, Object[], Integer>> interPodAntiAffinityMatchesPendingIndex = new HashMap<>();
+    interPodAntiAffinityMatchesPending.forEach(
+            e -> interPodAntiAffinityMatchesPendingIndex.put(e.get("POD_NAME", String.class), e)
+    );
+
     /* Constraint view constraint_pod_anti_affinity_pending */
     for (int podsToAssignIter = 0; podsToAssignIter < podsToAssign.size(); podsToAssignIter++) {
       final var i26 = podsToAssign.get(podsToAssignIter).get("HAS_POD_ANTI_AFFINITY_REQUIREMENTS", Boolean.class);
@@ -173,34 +180,15 @@ public final class GeneratedBackend implements IGeneratedBackend {
       /* Non-constraint view subquery3 */
       final List<IntVar> listOfi36 = new java.util.ArrayList<>();
       final java.util.List<Tuple5<IntVar, String, String, Object[], String>> subquery3 = new java.util.ArrayList<>();
-      for (int bIter = 0; bIter < podsToAssign.size(); bIter++) {
-        for (int interPodAntiAffinityMatchesPendingIter = 0; interPodAntiAffinityMatchesPendingIter < interPodAntiAffinityMatchesPending.size(); interPodAntiAffinityMatchesPendingIter++) {
-          final var i29 = podsToAssignControllableNodeName[bIter];
-          final var i30 = interPodAntiAffinityMatchesPending.get(interPodAntiAffinityMatchesPendingIter).get("POD_NAME", String.class);
-          final var i31 = podsToAssign.get(podsToAssignIter).get("POD_NAME", String.class);
-          final var i32 = interPodAntiAffinityMatchesPending.get(interPodAntiAffinityMatchesPendingIter).get("MATCHES", Object[].class);
-          final var i33 = podsToAssign.get(bIter).get("POD_NAME", String.class);
-          final var i34 = (o.eq(i30, i31));
-          if (!(i34)) {
-            continue;
-          }
-          final var i35 = o.in(i33, i32);
-          if (!(i35)) {
-            continue;
-          }
-
-          final Tuple5<IntVar, String, String, Object[], String> t = new Tuple5<>(
-                  i29 /* CONTROLLABLE__NODE_NAME */,
-                  i30 /* POD_NAME */,
-                  i31 /* POD_NAME */,
-                  i32 /* MATCHES */,
-                  i33 /* POD_NAME */
-                  );
-          subquery3.add(t);
-          final var i36 = t.value0();
-          listOfi36.add(i36);
-          break; // PK comparison
-        }
+      final var i31 = podsToAssign.get(podsToAssignIter).get("POD_NAME", String.class);
+      final var i32 = interPodAntiAffinityMatchesPendingIndex.get(i31);
+      if (i32 == null) {
+        continue;
+      }
+      final var i33 = i32.get("MATCHES", Object[].class);
+      for (int i33Iter = 0; i33Iter < i33.length; i33Iter++) {
+        final var i34 = podsToAssignControllableNodeNameChannel.get((String) i33[i33Iter]);
+        listOfi36.add(i34);
       }
       final var i37 = listOfi36;
       o.notInIntVarHalf(i27, i37);
@@ -336,19 +324,12 @@ public final class GeneratedBackend implements IGeneratedBackend {
     if (status == CpSolverStatus.FEASIBLE || status == CpSolverStatus.OPTIMAL) {
       final Map<IRTable, Result<? extends Record>> result = new HashMap<>();
       final Object[] obj = new Object[1]; // Used to update controllable fields;
-      result.put(context.getTable("INTER_POD_ANTI_AFFINITY_MATCHES_PENDING"), context.getTable("INTER_POD_ANTI_AFFINITY_MATCHES_PENDING").getCurrentData());
-      result.put(context.getTable("INTER_POD_AFFINITY_MATCHES_SCHEDULED"), context.getTable("INTER_POD_AFFINITY_MATCHES_SCHEDULED").getCurrentData());
-      result.put(context.getTable("INTER_POD_AFFINITY_MATCHES_PENDING"), context.getTable("INTER_POD_AFFINITY_MATCHES_PENDING").getCurrentData());
-      result.put(context.getTable("NODES_THAT_HAVE_TOLERATIONS"), context.getTable("NODES_THAT_HAVE_TOLERATIONS").getCurrentData());
       final Result<? extends Record> tmp2 = context.getTable("PODS_TO_ASSIGN").getCurrentData();
       for (int i = 0; i < podsToAssign.size(); i++) {
         obj[0] = encoder.toStr(solver.value(podsToAssignControllableNodeName[i]));
         tmp2.get(i).from(obj, "CONTROLLABLE__NODE_NAME");
       }
       result.put(context.getTable("PODS_TO_ASSIGN"), tmp2);
-      result.put(context.getTable("PODS_THAT_TOLERATE_NODE_TAINTS"), context.getTable("PODS_THAT_TOLERATE_NODE_TAINTS").getCurrentData());
-      result.put(context.getTable("POD_NODE_SELECTOR_MATCHES"), context.getTable("POD_NODE_SELECTOR_MATCHES").getCurrentData());
-      result.put(context.getTable("SPARE_CAPACITY_PER_NODE"), context.getTable("SPARE_CAPACITY_PER_NODE").getCurrentData());
       return result;
     }
     throw new ModelException("Could not solve " + status);
