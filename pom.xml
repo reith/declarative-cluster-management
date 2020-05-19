@@ -76,7 +76,7 @@
                         <arg>-Xplugin:ErrorProne
                              -XepAllErrorsAsWarnings
                              -Xep:Finally:OFF
-                             -XepExcludedPaths:(.*/annotations/org/dcm/generated/.*|.*/org/dcm/k8s/generated/.*)
+                             -XepExcludedPaths:(.*/annotations/org/dcm/generated/.*|.*/org/dcm/k8s/generated/.*|.*/org/dcm/backend/GeneratedBackend.java)
                         </arg>
                         <arg>-implicit:class</arg>
                     </compilerArgs>

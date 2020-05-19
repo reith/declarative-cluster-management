@@ -14,4 +14,7 @@
     <suppress checks="IllegalCatch"
               files="PodResourceEventHandler.java"
             />
+    <suppress checks="[a-zA-Z0-9]*"
+              files="GeneratedBackend.java"
+    />
 </suppressions>

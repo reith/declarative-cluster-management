@@ -31,7 +31,6 @@ public class Ops {
     private final IntVar falseVar;
     private final boolean configUseFullReifiedConstraintsForJoinPreferences;
 
-
     public Ops(final CpModel model, final StringEncoding encoding,
                final boolean configUseFullReifiedConstraintsForJoinPreferences) {
         this.model = model;
@@ -409,6 +408,13 @@ public class Ops {
         return bool;
     }
 
+    public void notInIntVarHalf(final IntVar left, final List<IntVar> right) {
+        final List<IntVar> v = new ArrayList<>(right.size() + 1);
+        v.addAll(right);
+        v.add(left);
+        model.addAllDifferent(v.toArray(new IntVar[0]));
+    }
+
     public IntVar or(final boolean left, final IntVar right) {
         return left ? trueVar : right;
     }
@@ -503,6 +509,7 @@ public class Ops {
 
         final Domain domainT = Domain.fromValues(domainArr);
         final Domain intervalRange = Domain.fromFlatIntervals(new long[] {domainT.min() + 1, domainT.max() + 1});
+
         for (int i = 0; i < numTasks; i++) {
             model.addLinearExpressionInDomain(taskToNodeAssignment[i], domainT);
             final IntVar intervalEnd = model.newIntVarFromDomain(intervalRange, "");

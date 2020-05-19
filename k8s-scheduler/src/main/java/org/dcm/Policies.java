@@ -108,16 +108,16 @@ class Policies {
             "           on inter_pod_anti_affinity_matches_pending.pod_name = pods_to_assign.pod_name" +
             "           and contains(inter_pod_anti_affinity_matches_pending.matches, b.pod_name)))";
 
-        final String constraintScheduled =
-                "create view constraint_pod_anti_affinity_scheduled as " +
-                "select * " +
-                "from pods_to_assign " +
-                "join inter_pod_anti_affinity_matches_scheduled on  " +
-                "     pods_to_assign.pod_name = inter_pod_anti_affinity_matches_scheduled.pod_name " +
-                "where pods_to_assign.has_pod_anti_affinity_requirements = false or " +
-                "      not(contains(inter_pod_anti_affinity_matches_scheduled.matches, " +
-                "                   pods_to_assign.controllable__node_name))";
-        return new Policy("InterPodAntiAffinity", List.of(constraintPending, constraintScheduled));
+//        final String constraintScheduled =
+//                "create view constraint_pod_anti_affinity_scheduled as " +
+//                "select * " +
+//                "from pods_to_assign " +
+//                "join inter_pod_anti_affinity_matches_scheduled on  " +
+//                "     pods_to_assign.pod_name = inter_pod_anti_affinity_matches_scheduled.pod_name " +
+//                "where pods_to_assign.has_pod_anti_affinity_requirements = false or " +
+//                "      not(contains(inter_pod_anti_affinity_matches_scheduled.matches, " +
+//                "                   pods_to_assign.controllable__node_name))";
+        return new Policy("InterPodAntiAffinity", List.of(constraintPending));
     }
 
 

@@ -127,7 +127,7 @@ public class OrToolsSolver implements ISolverBackend {
         System.load(System.getenv(OR_TOOLS_LIB_ENV));
     }
 
-    @Nullable private IGeneratedBackend generatedBackend;
+    @Nullable private IGeneratedBackend generatedBackend = new GeneratedBackend();
     @Nullable private IRContext context = null;
 
     private OrToolsSolver(final int configNumThreads, final int configMaxTimeInSeconds,

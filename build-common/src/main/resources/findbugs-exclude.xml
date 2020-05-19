@@ -19,6 +19,9 @@
         <Package name="org.dcm.k8s.generated.tables"/>
     </Match>
     <Match>
+        <Class name="org.dcm.backend.GeneratedBackend"/>
+    </Match>
+    <Match>
         <Class name="org.dcm.SchedulerTest" />
         <Bug pattern="UPM_UNCALLED_PRIVATE_METHOD" />
     </Match>
