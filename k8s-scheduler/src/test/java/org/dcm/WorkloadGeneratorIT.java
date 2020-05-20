@@ -363,9 +363,9 @@ class WorkloadGeneratorIT extends ITBase {
 
         @Override
         public void eventReceived(final Action action, final Pod pod) {
-            LOG.info("Timestamp: {}, Trace: {}, PodName: {}, NodeName: {}, Status: {}, Action: {}",
+            LOG.info("Timestamp: {}, Trace: {}, PodName: {}, NodeName: {}, Status: {}, Action: {}, PodStatus: {}",
                     System.currentTimeMillis(), traceId, pod.getMetadata().getName(), pod.getSpec().getNodeName(),
-                    pod.getStatus().getPhase(), action);
+                    pod.getStatus().getPhase(), action, pod.getStatus());
         }
 
         @Override
