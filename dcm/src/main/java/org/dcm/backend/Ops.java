@@ -72,6 +72,14 @@ public class Ops {
         }
     }
 
+    public void softIncreasing(final List<IntVar> data) {
+        for (int i = 0; i < data.size() - 1; i++) {
+            final IntVar bool = model.newBoolVar("");
+            model.addLessThan(data.get(i), data.get(i + 1)).onlyEnforceIf(bool); // soft constraint to maximize
+            model.maximize(LinearExpr.term(bool, 100));
+        }
+    }
+
     public IntVar exists(final List<IntVar> data) {
         final IntVar bool = model.newBoolVar("");
         final Literal[] literals = data.toArray(new Literal[0]);
@@ -617,5 +625,6 @@ public class Ops {
         final IntVar enforcement = model.newBoolVar("");
         model.addBoolOr(bools.toArray(new IntVar[0])).onlyEnforceIf(enforcement);;
         model.maximize(enforcement);
+        softIncreasing(varsToAssign);
     }
 }
