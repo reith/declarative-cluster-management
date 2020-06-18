@@ -41,8 +41,8 @@ main() {
     export PATH=~/gradle-6.5/bin:$PATH
     export PATH=~/jdk-12.0.2/bin:$PATH
     export PATH=~/minizinc/bin/:$PATH
-    export JAVA_HOME=~/jdk-12.0.2/
-    export OR_TOOLS_LIB=~/ortools/lib/libjniortools.so
+    export JAVA_HOME=/home/circleci/jdk-12.0.2/
+    export OR_TOOLS_LIB=/home/circleci/ortools/lib/libjniortools.so
     export LD_LIBRARY_PATH=~/minizinc/lib
     export QT_PLUGIN_PATH=~/minizinc/plugins
 
