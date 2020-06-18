@@ -3,8 +3,8 @@
 set -e
 set -x
 
-apt-get update
-apt install -y wget maven libglu1 git unzip
+sudo apt-get update
+sudo apt install -y wget maven libglu1 git unzip
 
 # Download JDK 12
 wget https://download.java.net/java/GA/jdk12.0.2/e482c34c86bd4bf8b56c0b35558996b9/10/GPL/openjdk-12.0.2_linux-x64_bin.tar.gz
