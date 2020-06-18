@@ -3,8 +3,10 @@
 set -e
 set -x
 
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
 sudo apt-get update
 sudo apt install -y wget maven libglu1 git unzip
+sudo apt-get upgrade -y libstdc++6
 
 # Download JDK 12
 cd ~/
