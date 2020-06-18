@@ -31,7 +31,7 @@ main() {
     # get kind
     install_kind_release
     # create a cluster
-    "${KIND}" create cluster --config k8s-scheduler/src/test/resources/kind-test-cluster-configuration.yaml
+    #"${KIND}" create cluster --config k8s-scheduler/src/test/resources/kind-test-cluster-configuration.yaml
     # set KUBECONFIG to point to the cluster
     KUBECONFIG="$("${KIND}" get kubeconfig-path)"
     export KUBECONFIG
@@ -46,7 +46,7 @@ main() {
     export LD_LIBRARY_PATH=~/MiniZincIDE-2.3.2-bundle-linux/lib
     export QT_PLUGIN_PATH=~/MiniZincIDE-2.3.2-bundle-linux/plugins
     
-    ./gradlew test integrationTest jacocoTestReport
+    ./gradlew test jacocoTestReport
     bash <(curl -s https://codecov.io/bash)
 }
 
