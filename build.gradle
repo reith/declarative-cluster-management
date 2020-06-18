@@ -71,7 +71,14 @@ subprojects {
     }
 
     test {
-        useJUnitPlatform()
+        useJUnitPlatform ()
+        testLogging {
+          events "passed", "skipped", "failed" //, "standardOut", "standardError"
+          showExceptions true
+          exceptionFormat "full"
+          showCauses true
+          showStackTraces true
+        }
         finalizedBy jacocoTestReport // report is always generated after tests run
     }
 
