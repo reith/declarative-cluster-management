@@ -31,7 +31,3 @@ mv or-tools_Ubuntu-18.04-64bit_v7.7.7810 ortools
 cd ortools/lib/ 
 mvn install:install-file -Dfile=com.google.ortools.jar -DgroupId=com.google -DartifactId=ortools -Dversion=7.7 -Dpackaging=jar 
 cd ~/
-rm ortools.tgz
-
-cd ~/
-
