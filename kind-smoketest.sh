@@ -40,14 +40,18 @@ main() {
 
     export PATH=~/gradle-6.5/bin:$PATH
     export PATH=~/jdk-12.0.2/bin:$PATH
-    export PATH=~/MiniZincIDE-2.3.2-bundle-linux/bin/:$PATH
+    export PATH=~/minizinc/bin/:$PATH
     export JAVA_HOME=~/jdk-12.0.2/
     export OR_TOOLS_LIB=~/ortools/lib/libjniortools.so
-    export LD_LIBRARY_PATH=~/MiniZincIDE-2.3.2-bundle-linux/lib
-    export QT_PLUGIN_PATH=~/MiniZincIDE-2.3.2-bundle-linux/plugins
+    export LD_LIBRARY_PATH=~/minizinc/lib
+    export QT_PLUGIN_PATH=~/minizinc/plugins
+
+    ls ~/ortools/
+    echo $OR_TOOLS_LIB
+    which minizinc
     
-    ./gradlew test jacocoTestReport
-    bash <(curl -s https://codecov.io/bash)
+    #./gradlew test jacocoTestReport
+    #bash <(curl -s https://codecov.io/bash)
 }
 
 main
