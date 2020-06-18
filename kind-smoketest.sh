@@ -38,7 +38,7 @@ main() {
     # TODO: invoke your tests here
     # teardown will happen automatically on exit
 
-    export PATH=~/gradle/gradle-6.5/bin:$PATH
+    export PATH=~/gradle-6.5/bin:$PATH
     export PATH=~/jdk-12.0.2/bin:$PATH
     export PATH=~/MiniZincIDE-2.3.2-bundle-linux/bin/:$PATH
     export JAVA_HOME=~/jdk-12.0.2/

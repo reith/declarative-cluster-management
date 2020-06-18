@@ -13,8 +13,7 @@ rm -rf openjdk-12.0.2_linux-x64_bin.tar.gz
 
 # Install Gradle
 wget https://services.gradle.org/distributions/gradle-6.5-bin.zip 
-mkdir gradle 
-unzip -d gradle gradle-6.5-bin.zip 
+unzip gradle-6.5-bin.zip 
 rm gradle-6.5-bin.zip
 
 # Install MiniZinc
