@@ -46,7 +46,7 @@ main() {
     export LD_LIBRARY_PATH=~/minizinc/lib
     export QT_PLUGIN_PATH=~/minizinc/plugins
 
-    ./gradlew test jacocoTestReport
+    ./gradlew test jacocoTestReport --stacktrace
     bash <(curl -s https://codecov.io/bash)
 }
 
