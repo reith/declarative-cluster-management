@@ -1,14 +1,15 @@
 # Requirements
 
-- docker
+- Docker
+
 
 # Artifact goals
 
-We will reproduce the key results from the Kubernetes scheduler evaluation in section 6.1. 
+We will reproduce key results from the Kubernetes scheduler evaluation in section 6.1.
 Given that some of the experiments were run on a 500 node AWS cluster in the paper, we 
 will use the simulation set up described in the "effect of increased cluster sizes" 
-experiment to run DCM on a single host. We will reproduce Table 1, and figures 13, 
-14 and 15, but for DCM and with sufficient fidelity.
+experiment to run DCM on a single host (we cannot run the baseline Kubernetes scheduler 
+this way). We will reproduce Table 1, and figures 13, 14 and 15 for DCM.
 
 
 # Instructions to produce results
@@ -25,15 +26,16 @@ experiment to run DCM on a single host. We will reproduce Table 1, and figures 1
   $: git clone http://github.com/vmware/declarative-cluster-management --single-branch --branch artifact
  ```
 
-3. Run the experiment (takes roughly 30-40 minutes):
+3. Run the following script, which will build the DCM binaries and run the experiments (takes roughly 30-40 minutes,
+   on a MacBook Pro with a 2.6 GHz 6-Core Intel Core i7 CPU and 32 GB RAM):
 
  ```
   $: cd declarative-cluster-management
   $: ./run_emulation.sh 20000
  ```
  
- Note: the results for the paper were produced with longer runs using `./run_emulation.sh 200000`, which takes roughly 
- 3-4 hours to execute. You'll find the shorter run produces similar plots.
+ Note: the results for the paper were produced with longer runs, equivalent to using `./run_emulation.sh 200000`, 
+ which takes roughly 3-4 hours to execute. You'll find the shorter run above produces similar plots.
 
 4. Once the command completes, confirm that it has created a `plots/` folder with the following files:
    * schedulingLatencyEcdfVaryFN=500PlotLocal.pdf (Figure 13, DCM)
@@ -49,4 +51,3 @@ experiment to run DCM on a single host. We will reproduce Table 1, and figures 1
   $: ARTIFACT_IMAGE=`docker ps | grep "dcm-osdi-artifact" | awk '{print $1}'`
   $: docker cp $ARTIFACT_IMAGE:/declarative-cluster-management/plots .
  ```
-
