@@ -3,6 +3,7 @@
 if [ -z "$1" ]
   then
     echo "Trace timestamp cut off not argument supplied (e.g., 20000)"
+    exit
 fi
 
 TRACE_DIR=trace-`date +%s`
