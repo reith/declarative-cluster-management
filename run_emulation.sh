@@ -23,6 +23,9 @@ do
    echo "v2-cropped.txt,dcm-scheduler,ORTOOLS,local,$GIT_BRANCH,$GIT_REV,$numNodes,$startTimeCutOff,0,100,$affinityProportion" >> $TRACE_DIR/$GIT_REV/$expId/metadata
 done
 
+# Process the above trace (creates a plots/ folder)
+python3 process_trace.py $TRACE_DIR data.db
+Rscript plot.r
 
 TRACE_DIR=trace-`date +%s`
 mkdir -p $TRACE_DIR/$GIT_REV
@@ -40,3 +43,7 @@ do
    echo "workload,schedulerName,solver,kubeconfig,dcmGitBranch,dcmGitCommitId,numNodes,startTimeCutOff,percentageOfNodesToScoreValue,timeScaleDown,affinityProportion" > $TRACE_DIR/$GIT_REV/$expId/metadata
    echo "v2-cropped.txt,dcm-scheduler,ORTOOLS,local,$GIT_BRANCH,$GIT_REV,$numNodes,$startTimeCutOff,0,100,$affinityProportion" >> $TRACE_DIR/$GIT_REV/$expId/metadata
 done
+
+# Process the above trace (creates a plots/ folder)
+python3 process_trace.py $TRACE_DIR data.db
+Rscript plot.r
