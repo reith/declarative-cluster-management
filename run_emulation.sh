@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ -z "$1" ]
+  then
+    echo "Trace timestamp cut off not argument supplied (e.g., 20000)"
+fi
 
 TRACE_DIR=trace-`date +%s`
 GIT_REV=`git rev-parse HEAD`
@@ -7,7 +11,7 @@ GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
 
 mkdir -p $TRACE_DIR/$GIT_REV
 
-startTimeCutOff=20000
+startTimeCutOff=$1
 
 for affinityProportion in 0 50 100;
 do

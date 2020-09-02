@@ -217,6 +217,6 @@ if (varyNExperiment) {
    colnames(result)[2] <- "#Variables"
    print(xtable(result, type = "latex", caption="Average number of model variables in the computed
    optimization models as a function of cluster size"), 
-         file =  paste("Local", "local" %in% params$kubeconfig, "modelSizeTable.tex", sep=""),
+         file = "plots/modelSizeTable.tex"
          include.rownames=FALSE)
 }
